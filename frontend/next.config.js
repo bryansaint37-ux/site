@@ -1,7 +1,6 @@
-const path = require('path');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // <--- Add this line here
   outputFileTracingRoot: path.join(__dirname),
   images: {
     remotePatterns: [
@@ -10,8 +9,8 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    return [{ source: '/api/:path*', destination: `${apiBaseUrl}/:path*` }];
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    return [{ source: '/api/:path*', destination: ${apiBaseUrl}/:path* }];
   },
 };
 
