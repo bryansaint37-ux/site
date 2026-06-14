@@ -1,14 +1,14 @@
 'use client';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 import Navbar from '@/components/ui/Navbar';
 import { CheckCircle, Download, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { format } from 'date-fns';
 import type { Ticket } from '@/types';
 
-export default function BookingSuccessPage() {
+function BookingSuccessPageContent() {
   const params = useSearchParams();
   const bookingId = params.get('booking');
 
@@ -64,5 +64,13 @@ export default function BookingSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BookingSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Loading booking details...</div>}>
+      <BookingSuccessPageContent />
+    </Suspense>
   );
 }

@@ -1,11 +1,12 @@
 'use client';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 
-export default function VerifyEmailPage() {
+function VerifyEmailPageContent() {
   const params = useSearchParams();
   const token = params.get('token');
 
@@ -44,5 +45,13 @@ export default function VerifyEmailPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Loading verification status...</div>}>
+      <VerifyEmailPageContent />
+    </Suspense>
   );
 }

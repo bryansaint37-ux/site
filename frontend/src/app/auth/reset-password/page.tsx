@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
@@ -7,7 +8,7 @@ import toast from 'react-hot-toast';
 import Link from 'next/link';
 import { Trophy } from 'lucide-react';
 
-export default function ResetPasswordPage() {
+function ResetPasswordPageContent() {
   const params = useSearchParams();
   const router = useRouter();
   const token = params.get('token');
@@ -51,5 +52,13 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Loading reset form...</div>}>
+      <ResetPasswordPageContent />
+    </Suspense>
   );
 }

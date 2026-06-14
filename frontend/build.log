@@ -1,0 +1,8 @@
+
+> worldcup-tickets-frontend@1.0.0 build
+> next build --webpack
+
+▲ Next.js 16.2.9 (webpack)
+- Environments: .env.local
+
+Terminate batch job (Y/N)? ^C

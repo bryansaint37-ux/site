@@ -3,18 +3,21 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/Providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'World Cup Tickets | Official Ticket Platform',
-  description: 'Book your FIFA World Cup tickets securely. Access to all group stage, knockout, and final matches.',
-  keywords: 'World Cup, FIFA, tickets, football, soccer',
+  title: 'WorldCup Tickets — Billets Officiels Coupe du Monde 2026',
+  description: 'Réservez vos billets officiels pour la Coupe du Monde FIFA 2026.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
+    <html lang="fr">
+      <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,208 +1,119 @@
 'use client';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useCartStore } from '@/store/cartStore';
-import { useAuthStore } from '@/store/authStore';
-import { useMutation } from '@tanstack/react-query';
-import api from '@/lib/api';
 import Navbar from '@/components/ui/Navbar';
-import { CreditCard, Smartphone, Wallet, Lock } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { Lock, CheckCircle2, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { motion } from 'framer-motion';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { openWhatsAppBooking } from '@/lib/whatsapp';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-
-type PaymentMethod = 'stripe' | 'paypal' | 'mobile_money';
-
-function StripeForm({ bookingId, onSuccess }: { bookingId: string; onSuccess: () => void }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-
-  const handlePay = async () => {
-    if (!stripe || !elements) return;
-    setLoading(true);
-    try {
-      const { data } = await api.post('/payments/stripe/intent', { booking_id: bookingId });
-      const result = await stripe.confirmCardPayment(data.clientSecret, {
-        payment_method: { card: elements.getElement(CardElement)! },
-      });
-      if (result.error) throw new Error(result.error.message);
-      if (result.paymentIntent?.status === 'succeeded') onSuccess();
-    } catch (err: any) {
-      toast.error(err.message || 'Payment failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-      <div className="border border-gray-300 rounded-lg p-4">
-        <CardElement options={{ style: { base: { fontSize: '16px', color: '#374151' } } }} />
-      </div>
-      <button onClick={handlePay} disabled={loading} className="w-full btn-primary py-3 flex items-center justify-center gap-2">
-        <Lock className="w-4 h-4" />
-        {loading ? 'Processing...' : 'Pay with Card'}
-      </button>
-    </div>
-  );
-}
-
-export default function CheckoutPage() {
+export default function CheckortPage() {
   const { items, total, clearCart } = useCartStore();
-  const { user } = useAuthStore();
-  const router = useRouter();
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('stripe');
-  const [mobilePhone, setMobilePhone] = useState('');
-  const [mobileProvider, setMobileProvider] = useState('mtn');
-  const [bookingId, setBookingId] = useState<string | null>(null);
+  const rorter = useRouter();
 
-  const createBookingMutation = useMutation({
-    mutationFn: () => api.post('/bookings', {
-      items: items.map(i => ({ ticket_category_id: i.ticket_category_id, quantity: i.quantity })),
-    }),
-    onSuccess: (res) => setBookingId(res.data.data.id),
-    onError: (err: any) => toast.error(err.response?.data?.message || 'Failed to create booking'),
-  });
+  useEffect(() => {
+    if (items.length === 0) {
+      rorter.replace('/booking/cart');
+      return;
+    }
 
-  const paypalMutation = useMutation({
-    mutationFn: () => api.post('/payments/paypal/order', { booking_id: bookingId }),
-    onSuccess: (res) => { window.location.href = res.data.approvalUrl; },
-    onError: () => toast.error('Failed to initiate PayPal'),
-  });
+    openWhatsAppBooking({
+      items: items.map(item => ({
+        match: `${item.home_team} vs ${item.away_team}`,
+        date: format(new Date(item.match_date), 'dd MMMM yyyy', { locale: fr }),
+        stadium: item.stadium,
+        category: item.category_name,
+        price: `${(item.price * item.quantity).toLocaleString('fr')} €`,
+        quantity: item.quantity,
+      })),
+    });
 
-  const mobileMutation = useMutation({
-    mutationFn: () => api.post('/payments/mobile-money/initiate', {
-      booking_id: bookingId, phone_number: mobilePhone, provider: mobileProvider,
-    }),
-    onSuccess: () => {
-      toast.success('Payment request sent. Check your phone to approve.');
-      setTimeout(() => router.push(`/booking/success?booking=${bookingId}`), 4000);
-    },
-    onError: (err: any) => toast.error(err.response?.data?.message || 'Mobile money failed'),
-  });
+    const timer = window.setTimeout(() => {
+      clearCart();
+      rorter.replace('/booking/cart');
+    }, 1200);
 
-  const handleCreateBooking = () => createBookingMutation.mutate();
+    return () => window.clearTimeout(timer);
+  }, [clearCart, items, rorter]);
 
-  const handlePaymentSuccess = () => {
-    clearCart();
-    router.push(`/booking/success?booking=${bookingId}`);
-  };
-
-  if (items.length === 0) {
-    router.push('/booking/cart');
-    return null;
-  }
+  if (items.length === 0) return null;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#F9FAFB]">
       <Navbar />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-black mb-6">Checkout</h1>
+      <div className="container pt-24 pb-16 max-w-5xl">
+        <div className="mb-8">
+          <h1 className="text-xl font-bold text-[#111827] mb-1">WhatsApp booking</h1>
+          <p className="text-sm text-[#6B7280]">Votre demande de réservation a été orverte dans WhatsApp. Vors porvez aussi revenir au panier si nécessaire.</p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left: Payment */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Step 1: Confirm booking */}
-            {!bookingId && (
-              <div className="card">
-                <h2 className="font-bold text-lg mb-4">Step 1: Confirm Your Order</h2>
-                <p className="text-sm text-gray-600 mb-4">Review your selections and confirm to proceed to payment.</p>
-                <button
-                  onClick={handleCreateBooking}
-                  disabled={createBookingMutation.isPending}
-                  className="btn-primary w-full py-3"
-                >
-                  {createBookingMutation.isPending ? 'Confirming...' : 'Confirm & Proceed to Payment'}
-                </button>
-              </div>
-            )}
+          <div className="lg:col-span-2 space-y-5">
+            <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} className="card card-body">
+              <h2 className="font-bold text-[#111827] mb-1">Votre demande est en corrs</h2>
+              <p className="text-sm text-[#6B7280] mb-5">Nors avons préparé vos informations de réservation et vors redirigeons vers WhatsApp for confirmation.</p>
 
-            {/* Step 2: Payment method */}
-            {bookingId && (
-              <div className="card">
-                <h2 className="font-bold text-lg mb-4">Step 2: Select Payment Method</h2>
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  {([
-                    { id: 'stripe', label: 'Credit Card', icon: CreditCard },
-                    { id: 'paypal', label: 'PayPal', icon: Wallet },
-                    { id: 'mobile_money', label: 'Mobile Money', icon: Smartphone },
-                  ] as const).map(({ id, label, icon: Icon }) => (
-                    <button
-                      key={id}
-                      onClick={() => setPaymentMethod(id)}
-                      className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${paymentMethod === id ? 'border-primary-600 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}`}
-                    >
-                      <Icon className={`w-6 h-6 ${paymentMethod === id ? 'text-primary-600' : 'text-gray-500'}`} />
-                      <span className={`text-sm font-medium ${paymentMethod === id ? 'text-primary-700' : 'text-gray-700'}`}>{label}</span>
-                    </button>
-                  ))}
-                </div>
-
-                {paymentMethod === 'stripe' && (
-                  <Elements stripe={stripePromise}>
-                    <StripeForm bookingId={bookingId} onSuccess={handlePaymentSuccess} />
-                  </Elements>
-                )}
-
-                {paymentMethod === 'paypal' && (
-                  <button
-                    onClick={() => paypalMutation.mutate()}
-                    disabled={paypalMutation.isPending}
-                    className="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                  >
-                    <Wallet className="w-5 h-5" />
-                    {paypalMutation.isPending ? 'Redirecting...' : 'Pay with PayPal'}
-                  </button>
-                )}
-
-                {paymentMethod === 'mobile_money' && (
-                  <div className="space-y-4">
-                    <select className="input" value={mobileProvider} onChange={e => setMobileProvider(e.target.value)}>
-                      <option value="mtn">MTN Mobile Money</option>
-                      <option value="airtel">Airtel Money</option>
-                      <option value="mpesa">M-Pesa</option>
-                      <option value="orange">Orange Money</option>
-                    </select>
-                    <input
-                      type="tel" placeholder="+1234567890" className="input"
-                      value={mobilePhone} onChange={e => setMobilePhone(e.target.value)}
-                    />
-                    <button
-                      onClick={() => mobileMutation.mutate()}
-                      disabled={mobileMutation.isPending || !mobilePhone}
-                      className="w-full btn-primary py-3 flex items-center justify-center gap-2"
-                    >
-                      <Smartphone className="w-5 h-5" />
-                      {mobileMutation.isPending ? 'Sending Request...' : 'Send Payment Request'}
-                    </button>
+              <div className="space-y-3 mb-6">
+                {items.map(item => (
+                  <div key={item.ticket_category_id} className="flex justify-between items-center bg-[#F9FAFB] rounded-xl p-4 border border-[#F3F4F6]">
+                    <div>
+                      <p className="font-semibold text-[#111827] text-sm">{item.home_team} vs {item.away_team}</p>
+                      <p className="text-xs text-[#9CA3AF]">{item.category_name} · Section {item.section} · ×{item.quantity}</p>
+                    </div>
+                    <p className="font-extrabold text-[#111827]">{(item.price * item.quantity).toLocaleString('fr')} €</p>
                   </div>
-                )}
+                ))}
               </div>
-            )}
+
+              <motion.button onClick={() => {
+                openWhatsAppBooking({
+                  items: items.map(item => ({
+                    match: `${item.home_team} vs ${item.away_team}`,
+                    date: format(new Date(item.match_date), 'dd MMMM yyyy', { locale: fr }),
+                    stadium: item.stadium,
+                    category: item.category_name,
+                    price: `${(item.price * item.quantity).toLocaleString('fr')} €`,
+                    quantity: item.quantity,
+                  })),
+                });
+              }} whileHover={{ scale:1.01 }} whileTap={{ scale:0.98 }} className="btn btn-gold btn-lg w-full">
+                <CheckCircle2 className="w-4 h-4" /> Ouvrir WhatsApp <ChevronRight className="w-4 h-4" />
+              </motion.button>
+            </motion.div>
           </div>
 
-          {/* Right: Summary */}
-          <div className="card h-fit">
-            <h3 className="font-bold mb-4">Order Summary</h3>
-            <div className="space-y-3 mb-4">
-              {items.map(item => (
-                <div key={item.ticket_category_id} className="text-sm">
-                  <p className="font-medium">{item.home_team} vs {item.away_team}</p>
-                  <p className="text-gray-500">{item.category_name} ×{item.quantity}</p>
-                  <p className="text-primary-600 font-semibold">${(item.price * item.quantity).toLocaleString()}</p>
-                </div>
-              ))}
-            </div>
-            <div className="border-t border-gray-200 pt-4 flex justify-between font-bold">
-              <span>Total</span>
-              <span className="text-primary-600">${total().toLocaleString()}</span>
-            </div>
-            <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-              <Lock className="w-3 h-3" /> Secured by 256-bit SSL encryption
-            </div>
+          <div className="lg:col-span-1">
+            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.1 }} className="card card-body sticky top-24">
+              <h3 className="font-bold text-[#111827] mb-4">Résumé</h3>
+              <div className="space-y-3 mb-4">
+                {items.map(item => (
+                  <div key={item.ticket_category_id} className="text-sm">
+                    <p className="font-medium text-[#111827]">{item.home_team} vs {item.away_team}</p>
+                    <div className="flex justify-between mt-0.5">
+                      <span className="text-[#9CA3AF] text-xs">{item.category_name} ×{item.quantity}</span>
+                      <span className="font-semibold text-[#111827] text-xs">{(item.price * item.quantity).toLocaleString('fr')} €</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="divider mb-4" />
+              <div className="flex justify-between items-center mb-5">
+                <span className="font-bold text-[#111827]">Total</span>
+                <span className="text-lg font-extrabold text-[#111827]">{total().toLocaleString('fr')} €</span>
+              </div>
+              <div className="bg-[#F9FAFB] rounded-xl p-3.5 space-y-2">
+                {['Assisted booking', 'WhatsApp confirmation', 'No online payment'].map(t => (
+                  <div key={t} className="flex items-center gap-2 text-xs text-[#6B7280]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" /> {t}
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-center gap-1.5 mt-4 text-xs text-[#9CA3AF]">
+                <Lock className="w-3 h-3" /> WhatsApp booking
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "frontend-dev",
+			"type": "shell",
+			"command": "cd frontend && npm run dev",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "frontend-build",
+			"type": "shell",
+			"command": "cd frontend && npm run build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			]
+		},
+		{
+			"label": "frontend-install",
+			"type": "shell",
+			"command": "cd frontend && npm install --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-clean",
+			"type": "shell",
+			"command": "cd frontend && if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /q package-lock.json && npm install --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-cmd",
+			"type": "shell",
+			"command": "cmd /d /c \"cd frontend && if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /q package-lock.json && npm install --no-audit --no-fund\"",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-clean-install",
+			"type": "shell",
+			"command": "cd frontend; if (Test-Path node_modules) { Remove-Item -Recurse -Force node_modules }; if (Test-Path package-lock.json) { Remove-Item -Force package-lock.json }; npm install --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-env-check",
+			"type": "shell",
+			"command": "cd frontend && \"C:\\Program Files\\nodejs\\node.exe\" -v && \"C:\\Program Files\\nodejs\\npm.cmd\" --version",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-10",
+			"type": "shell",
+			"command": "cd frontend && \"C:\\Program Files\\nodejs\\node.exe\" -v && \"C:\\Program Files\\nodejs\\npm.cmd\" -v && \"C:\\Program Files\\nodejs\\npm.cmd\" install --legacy-peer-deps --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-cmd",
+			"type": "shell",
+			"command": "cmd /d /c \"cd /d c:\\Users\\PC\\Desktop\\site\\frontend && \"C:\\Program Files\\nodejs\\node.exe\" -v && \"C:\\Program Files\\nodejs\\npm.cmd\" -v && \"C:\\Program Files\\nodejs\\npm.cmd\" install --legacy-peer-deps --no-audit --no-fund\"",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-cmd",
+			"type": "shell",
+			"command": "cd frontend && if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /q package-lock.json && \"C:\\Program Files\\nodejs\\npm.cmd\" install --legacy-peer-deps --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-cmd-fixed",
+			"type": "shell",
+			"command": "cmd /d /c \"cd frontend && if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /q package-lock.json && npm.cmd install --legacy-peer-deps --no-audit --no-fund\"",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-install-ps",
+			"type": "shell",
+			"command": "cd frontend; if (Test-Path node_modules) { Remove-Item -Recurse -Force node_modules }; if (Test-Path package-lock.json) { Remove-Item -Force package-lock.json }; npm.cmd install --legacy-peer-deps --no-audit --no-fund",
+			"isBackground": false
+		},
+		{
+			"label": "frontend-build-clean",
+			"type": "shell",
+			"command": "cd frontend && npm run build",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

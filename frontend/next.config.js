@@ -1,10 +1,17 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: path.join(__dirname),
   images: {
-    domains: ['worldcup-tickets.s3.amazonaws.com', 'flagcdn.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'worldcup-tickets.s3.amazonaws.com' },
+      { protocol: 'https', hostname: 'flagcdn.com' },
+    ],
   },
   async rewrites() {
-    return [{ source: '/api/:path*', destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*` }];
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    return [{ source: '/api/:path*', destination: `${apiBaseUrl}/:path*` }];
   },
 };
 
