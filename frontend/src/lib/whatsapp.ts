@@ -15,23 +15,23 @@ export function buildWhatsAppLink({
   price?: string;
   items?: Array<{ match: string; date: string; stadium: string; category: string; price: string; quantity?: number }>;
 }) {
-  const lines = ['Hello,', '', 'I would like to book a ticket for:', ''];
+  const lines = ['Hello,', '', 'I would like to reserve a ticket for:', ''];
 
   if (items && items.length > 0) {
     items.forEach((item, index) => {
-      lines.push(`${index + 1}. Match : ${item.match}`);
-      lines.push(`   Date : ${item.date}`);
-      lines.push(`   Stade : ${item.stadium}`);
-      lines.push(`   Catégorie : ${item.category}`);
-      if (item.quantity) lines.push(`   Quantité : ${item.quantity}`);
-      lines.push(`   Prix : ${item.price}`);
+      lines.push(`${index + 1}. Match: ${item.match}`);
+      lines.push(`   Date: ${item.date}`);
+      lines.push(`   Stadium: ${item.stadium}`);
+      lines.push(`   Price: ${item.price}`);
+      if (item.category) lines.push(`   Category: ${item.category}`);
+      if (item.quantity) lines.push(`   Quantity: ${item.quantity}`);
       lines.push('');
     });
   } else {
-    lines.push(`Match : ${match || 'To confirm'}`);
-    lines.push(`Date : ${date || 'To confirm'}`);
-    lines.push(`Stadium : ${stadium || 'To confirm'}`);
-    lines.push(`Price : ${price}`);
+    lines.push(`Match: ${match || 'To confirm'}`);
+    lines.push(`Date: ${date || 'To confirm'}`);
+    lines.push(`Stadium: ${stadium || 'To confirm'}`);
+    lines.push(`Price: ${price}`);
     lines.push('');
   }
 
