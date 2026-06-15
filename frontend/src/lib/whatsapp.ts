@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = '+33756801841';
+const WHATSAPP_NUMBER = '+1(778)8250952';
 
 export function buildWhatsAppLink({
   match,
