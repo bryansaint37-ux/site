@@ -14,9 +14,9 @@ const COLS = [
   {
     title: 'Tickets',
     links: [
-      { href: '/matches', label: 'Voir les matchs'     },
-      { href: '/matches', label: 'Acheter des billets' },
-      { href: '/stades',  label: 'Les stades'          },
+      { href: '#matches', label: 'Voir les matchs'     },
+      { href: '#matches', label: 'Acheter des billets' },
+      { href: '#stadiums', label: 'Les stades'          },
       { href: '/vip',     label: 'Tickets VIP'         },
     ],
   },

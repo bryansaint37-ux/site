@@ -54,15 +54,34 @@ const FEATURES = [
   { icon: Headphones,   title: '24/7 support', desc: 'Our multilingual support team is available at any time to accompany you.' },
 ];
 
-const MATCHES = [
-  { id: 1, stage: 'Featured match', avail: true, home: { name: 'Mexique', code: 'MEX', flag: '🇲🇽' }, away: { name: 'Afrique du Sud', code: 'RSA', flag: '🇿🇦' }, date: '11 Juin 2026', h: '18:30', stade: 'Mexico City Stadium', ville: 'Mexico', prix: '100' },
-  { id: 2, stage: 'Featured match', avail: true, home: { name: 'Canada', code: 'CAN', flag: '🇨🇦' }, away: { name: 'Bosnie-Herzégovine', code: 'BIH', flag: '🇧🇦' }, date: '12 Juin 2026', h: '19:00', stade: 'Toronto Stadium', ville: 'Toronto', prix: '100' },
-  { id: 3, stage: 'Featured match', avail: true, home: { name: 'États-Unis', code: 'USA', flag: '🇺🇸' }, away: { name: 'Paraguay', code: 'PAR', flag: '🇵🇾' }, date: '12 Juin 2026', h: '22:00', stade: 'Los Angeles Stadium', ville: 'Los Angeles', prix: '80' },
-  { id: 4, stage: 'Featured match', avail: true, home: { name: 'Brésil', code: 'BRA', flag: '🇧🇷' }, away: { name: 'Maroc', code: 'MAR', flag: '🇲🇦' }, date: '13 Juin 2026', h: '20:30', stade: 'New York New Jersey Stadium', ville: 'New York', prix: '180' },
-  { id: 5, stage: 'Featured match', avail: true, home: { name: 'Allemagne', code: 'GER', flag: '🇩🇪' }, away: { name: 'Curaçao', code: 'CUW', flag: '🇨🇼' }, date: '14 Juin 2026', h: '17:30', stade: 'Horston Stadium', ville: 'Horston', prix: '80' },
+const POPULAR_MATCHES = [
+  { id: 1, stage: 'Featured match', avail: false, home: { name: 'Mexique', code: 'MEX', flag: '🇲🇽' }, away: { name: 'Afrique du Sud', code: 'RSA', flag: '🇿🇦' }, date: '11 Juin 2026', h: '18:30', stade: 'Mexico City Stadium', ville: 'Mexico', prix: '100' },
+  { id: 2, stage: 'Featured match', avail: false, home: { name: 'Canada', code: 'CAN', flag: '🇨🇦' }, away: { name: 'Bosnie-Herzégovine', code: 'BIH', flag: '🇧🇦' }, date: '12 Juin 2026', h: '19:00', stade: 'Toronto Stadium', ville: 'Toronto', prix: '100' },
+  { id: 3, stage: 'Featured match', avail: false, home: { name: 'États-Unis', code: 'USA', flag: '🇺🇸' }, away: { name: 'Paraguay', code: 'PAR', flag: '🇵🇾' }, date: '12 Juin 2026', h: '22:00', stade: 'Los Angeles Stadium', ville: 'Los Angeles', prix: '80' },
+  { id: 4, stage: 'Featured match', avail: false, home: { name: 'Brésil', code: 'BRA', flag: '🇧🇷' }, away: { name: 'Maroc', code: 'MAR', flag: '🇲🇦' }, date: '13 Juin 2026', h: '20:30', stade: 'New York New Jersey Stadium', ville: 'New York', prix: '180' },
+  { id: 5, stage: 'Featured match', avail: false, home: { name: 'Allemagne', code: 'GER', flag: '🇩🇪' }, away: { name: 'Curaçao', code: 'CUW', flag: '🇨🇼' }, date: '14 Juin 2026', h: '17:30', stade: 'Horston Stadium', ville: 'Horston', prix: '80' },
   { id: 6, stage: 'Featured match', avail: true, home: { name: 'France', code: 'FRA', flag: '🇫🇷' }, away: { name: 'Sénégal', code: 'SEN', flag: '🇸🇳' }, date: '16 Juin 2026', h: '19:30', stade: 'New York New Jersey Stadium', ville: 'New York', prix: '180' },
   { id: 7, stage: 'Featured match', avail: true, home: { name: 'Argentine', code: 'ARG', flag: '🇦🇷' }, away: { name: 'Algérie', code: 'ALG', flag: '🇩🇿' }, date: '16 Juin 2026', h: '21:30', stade: 'Kansas City Stadium', ville: 'Kansas City', prix: '180' },
   { id: 8, stage: 'Featured match', avail: true, home: { name: 'Angleterre', code: 'ENG', flag: '🏴' }, away: { name: 'Croatie', code: 'CRO', flag: '🇭🇷' }, date: '17 Juin 2026', h: '18:00', stade: 'Dallas Stadium', ville: 'Dallas', prix: '80' },
+];
+
+const ALL_MATCHES = [
+  { id: 1, group: 'GROUP A', home: 'Mexico', away: 'South Africa', date: 'June 11, 2026', time: '20:00', stadium: 'Mexico City Stadium', city: 'Mexico City', price: 80, remaining: 0 },
+  { id: 2, group: 'GROUP A', home: 'South Korea', away: 'Czech Republic', date: 'June 12, 2026', time: '03:00', stadium: 'Estadio Guadalajara', city: 'Guadalajara', price: 80, remaining: 0 },
+  { id: 3, group: 'GROUP A', home: 'Czech Republic', away: 'South Africa', date: 'June 18, 2026', time: '19:30', stadium: 'Mercedes-Benz Stadium', city: 'Atlanta', price: 80, remaining: 88 },
+  { id: 4, group: 'GROUP A', home: 'Mexico', away: 'South Korea', date: 'June 19, 2026', time: '22:00', stadium: 'Mexico City Stadium', city: 'Mexico City', price: 80, remaining: 112 },
+  { id: 5, group: 'GROUP B', home: 'Canada', away: 'Bosnia and Herzegovina', date: 'June 12, 2026', time: '19:00', stadium: 'Toronto Stadium', city: 'Toronto', price: 80, remaining: 104 },
+  { id: 6, group: 'GROUP B', home: 'Qatar', away: 'Switzerland', date: 'June 13, 2026', time: '20:30', stadium: 'San Francisco Bay Area Stadium', city: 'San Francisco', price: 80, remaining: 91 },
+  { id: 7, group: 'GROUP C', home: 'Brazil', away: 'Morocco', date: 'June 13, 2026', time: '20:00', stadium: 'New York New Jersey Stadium', city: 'New York', price: 80, remaining: 108 },
+  { id: 8, group: 'GROUP C', home: 'Scotland', away: 'Morocco', date: 'June 19, 2026', time: '19:30', stadium: 'Boston Stadium', city: 'Boston', price: 80, remaining: 92 },
+  { id: 9, group: 'GROUP D', home: 'United States', away: 'Paraguay', date: 'June 12, 2026', time: '22:00', stadium: 'Los Angeles Stadium', city: 'Los Angeles', price: 80, remaining: 118 },
+  { id: 10, group: 'GROUP D', home: 'Australia', away: 'Turkey', date: 'June 13, 2026', time: '18:00', stadium: 'BC Place Vancouver', city: 'Vancouver', price: 80, remaining: 99 },
+  { id: 11, group: 'GROUP I', home: 'France', away: 'Senegal', date: 'June 13, 2026', time: '19:30', stadium: 'New York New Jersey Stadium', city: 'New York', price: 80, remaining: 103 },
+  { id: 12, group: 'GROUP I', home: 'Iraq', away: 'Norway', date: 'June 13, 2026', time: '23:30', stadium: 'Boston Stadium', city: 'Boston', price: 80, remaining: 75 },
+  { id: 13, group: 'GROUP J', home: 'Argentina', away: 'Algeria', date: 'June 13, 2026', time: '20:30', stadium: 'Kansas City Stadium', city: 'Kansas City', price: 80, remaining: 95 },
+  { id: 14, group: 'GROUP J', home: 'Austria', away: 'Jordan', date: 'June 13, 2026', time: '23:00', stadium: 'San Francisco Bay Area Stadium', city: 'San Francisco', price: 80, remaining: 82 },
+  { id: 15, group: 'GROUP L', home: 'England', away: 'Croatia', date: 'June 17, 2026', time: '18:30', stadium: 'Dallas Stadium', city: 'Dallas', price: 80, remaining: 111 },
+  { id: 16, group: 'GROUP L', home: 'Ghana', away: 'Panama', date: 'June 17, 2026', time: '21:30', stadium: 'Toronto Stadium', city: 'Toronto', price: 80, remaining: 73 },
 ];
 
 const FINAL_PHASES = [
@@ -104,6 +123,7 @@ export default function HomePage() {
       <StatsSection />
       <FeaturesSection />
       <MatchesSection />
+      <AllMatchesSection />
       <FinalsSection />
       <CategoriesSection />
       <TestimonialsSection />
@@ -152,18 +172,20 @@ function HeroSection() {
 
           <motion.div variants={up} initial="hidden" animate="visible" custom={0.3}
             className="flex flex-wrap justify-center gap-3 mb-14">
-            <Link href="/matches">
-              <motion.span whileHover={{ scale: 1.03, y: -1 }} whileTap={{ scale: 0.97 }}
-                className="btn-green btn-lg rounded-full cursor-pointer min-w-[210px] justify-center">
-                see the matches <ChevronRight className="w-4 h-4" />
-              </motion.span>
-            </Link>
-            <Link href="/matches">
-              <motion.span whileHover={{ scale: 1.03, y: -1 }} whileTap={{ scale: 0.97 }}
-                className="btn-green btn-lg rounded-full cursor-pointer min-w-[210px] justify-center">
-                Book now <ArrowRight className="w-4 h-4" />
-              </motion.span>
-            </Link>
+            <motion.button
+              type="button"
+              onClick={() => document.getElementById('matches')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              whileHover={{ scale: 1.03, y: -1 }} whileTap={{ scale: 0.97 }}
+              className="btn-green btn-lg rounded-full cursor-pointer min-w-[210px] justify-center">
+              View Matches <ChevronRight className="w-4 h-4" />
+            </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => openWhatsAppBooking({ match: 'FIFA World Cup 2026 tickets', date: 'To confirm', stadium: 'Official stadium schedule', category: 'Official ticket', price: 'From $80' })}
+              whileHover={{ scale: 1.03, y: -1 }} whileTap={{ scale: 0.97 }}
+              className="btn-gold btn-lg rounded-full cursor-pointer min-w-[210px] justify-center">
+              Buy Now <ArrowRight className="w-4 h-4" />
+            </motion.button>
           </motion.div>
 
           <motion.div variants={up} initial="hidden" animate="visible" custom={0.45}
@@ -262,11 +284,11 @@ function MatchesSection() {
         <div className="mx-auto flex flex-col items-center text-center gap-4 mb-10">
           <div className="max-w-2xl">
             <motion.p variants={up} initial="hidden" whileInView="visible" viewport={{ once: true }} className="eyebrow">
-              Upcoming matches
+              Featured fixtures
             </motion.p>
             <motion.h2 variants={up} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.05}
               className="heading-lg mt-2">
-              popular matches
+              🔥 Popular Matches
             </motion.h2>
             <motion.p variants={up} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.08}
               className="body-sm mt-3 text-[#4B5563] max-w-xl mx-auto">
@@ -277,9 +299,9 @@ function MatchesSection() {
             <button type="button" onClick={() => scrollByAmount('left')} aria-label="Scroll left" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-white text-[#111827] shadow-md transition hover:-translate-y-0.5 hover:bg-[#FFF8E5]">
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <Link href="/matches" className="btn-green btn-md">
-              All matches <ArrowRight className="w-4 h-4" />
-            </Link>
+            <button type="button" onClick={() => document.getElementById('matches')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="btn-green btn-md">
+              View all matches <ArrowRight className="w-4 h-4" />
+            </button>
             <button type="button" onClick={() => scrollByAmount('right')} aria-label="Scroll right" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-white text-[#111827] shadow-md transition hover:-translate-y-0.5 hover:bg-[#FFF8E5]">
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -287,7 +309,7 @@ function MatchesSection() {
         </div>
 
         <div ref={scrollRef} className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
-          {MATCHES.map((m, index) => (
+          {POPULAR_MATCHES.map((m, index) => (
             <motion.article key={m.id} variants={up} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={index * 0.04}
               whileHover={{ y: -6, scale: 1.01 }}
               className="group min-w-[320px] max-w-[340px] flex-1 snap-start rounded-[24px] border border-[#E5E7EB] bg-white p-5 shadow-[0_18px_40px_rgba(15,23,42,0.10)] transition-all duration-200 hover:shadow-[0_24px_48px_rgba(15,23,42,0.14)] md:min-w-[320px] lg:min-w-[340px]">
@@ -324,7 +346,7 @@ function MatchesSection() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => openWhatsAppBooking({ match: `${m.home.name} vs ${m.away.name}`, date: m.date, stadium: m.stade, category: 'Match populaire', price: `${m.prix} $` })}
+                  onClick={() => openWhatsAppBooking({ match: `${m.home.name} vs ${m.away.name}`, date: m.date, stadium: m.stade, category: 'Popular match ticket', price: `$${m.prix}` })}
                   className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-4 py-2.5 text-xs font-semibold text-white shadow-[0_12px_24px_rgba(212,175,55,0.25)] transition duration-300 hover:bg-[#28A745] hover:text-white"
                 >
                   <Ticket className="h-3.5 w-3.5" /> Book
@@ -339,6 +361,46 @@ function MatchesSection() {
 }
 
 /* ── 5. FINALS ── */
+function AllMatchesSection() {
+  return (
+    <section id="matches" className="section-gap bg-white">
+      <div className="container-app">
+        <div className="mx-auto max-w-3xl text-center mb-10">
+          <p className="eyebrow">Official schedule</p>
+          <h2 className="heading-lg mt-2">📅 Official FIFA World Cup 2026 Schedule</h2>
+          <p className="body-sm mt-3 text-[#4B5563]">All group-stage fixtures are available directly on this page with premium cards, live availability, and direct WhatsApp booking.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {ALL_MATCHES.map((match, index) => (
+            <motion.article key={match.id} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35, delay: index * 0.03 }} whileHover={{ y: -6 }} className="rounded-3xl border border-[#E5E7EB] bg-white p-5 shadow-[0_18px_40px_rgba(15,23,42,0.10)] hover:shadow-[0_24px_48px_rgba(15,23,42,0.14)] transition-all duration-200">
+              <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-[#6B7280] mb-4">
+                <span className="rounded-full bg-[#FFF8E5] px-3 py-1 text-[#92750C] font-semibold">{match.group}</span>
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 font-semibold">{match.remaining} seats</span>
+              </div>
+              <div className="space-y-3 text-sm text-[#111827]">
+                <div className="text-xl font-semibold leading-snug">{match.home} vs {match.away}</div>
+                <div className="flex items-center gap-2 text-[#4B5563]"><Calendar className="h-4 w-4 text-[#D4AF37]" /> {match.date}</div>
+                <div className="flex items-center gap-2 text-[#4B5563]"><Calendar className="h-4 w-4 text-[#D4AF37]" /> {match.time}</div>
+                <div className="flex items-center gap-2 text-[#4B5563]"><MapPin className="h-4 w-4 text-[#D4AF37]" /> {match.stadium}</div>
+                <div className="flex items-center gap-2 text-[#4B5563]"><MapPin className="h-4 w-4 text-[#D4AF37]" /> {match.city}</div>
+              </div>
+              <div className="mt-5 flex items-end justify-between border-t border-[#F3F4F6] pt-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-[#9CA3AF]">Starting price</p>
+                  <p className="text-2xl font-black text-[#111827]">${match.price}</p>
+                </div>
+                <button type="button" onClick={() => openWhatsAppBooking({ match: `${match.home} vs ${match.away}`, date: `${match.date} · ${match.time}`, stadium: match.stadium, category: 'Group stage ticket', price: `$${match.price}` })} className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-4 py-2.5 text-xs font-semibold text-[#111827] shadow-[0_12px_24px_rgba(212,175,55,0.25)] transition duration-300 hover:bg-[#28A745] hover:text-white">
+                  <Ticket className="h-3.5 w-3.5" /> Book Now
+                </button>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalsSection() {
   return (
     <section className="section-gap bg-white">

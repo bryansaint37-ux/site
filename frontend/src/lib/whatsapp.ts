@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = '+1(778)8250952';
+const WHATSAPP_NUMBER = '+33756801841';
 
 export function buildWhatsAppLink({
   match,
@@ -31,12 +31,11 @@ export function buildWhatsAppLink({
     lines.push(`Match : ${match || 'To confirm'}`);
     lines.push(`Date : ${date || 'To confirm'}`);
     lines.push(`Stadium : ${stadium || 'To confirm'}`);
-    lines.push(`Category : ${category}`);
     lines.push(`Price : ${price}`);
     lines.push('');
   }
 
-  lines.push('Merci de me confirmer la disponibilité et les prochaines étapes.');
+  lines.push('Thank you.');
 
   const text = lines.join('\n');
 

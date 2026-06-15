@@ -112,7 +112,7 @@ export default function DashboardPage() {
                   <h1 className="heading-md">{TABS.find(t => t.key === tab)?.label}</h1>
                   <p className="body-sm mt-0.5">Bonjour {user?.first_name}, bienvenue.</p>
                 </div>
-                <Link href="/matches" className="btn-gold btn-sm hidden sm:flex">
+                <Link href="/#matches" className="btn-gold btn-sm hidden sm:flex">
                   <Ticket className="w-3.5 h-3.5" /> Acheter des billets
                 </Link>
               </div>
@@ -148,7 +148,7 @@ export default function DashboardPage() {
                     </div>
                     <h3 className="font-semibold text-[#111827] mb-2">Aucun billet pour le moment</h3>
                     <p className="body-sm mb-6">Explorez les matchs disponibles et réservez votre place.</p>
-                    <Link href="/matches" className="btn-dark btn-md mx-auto">
+                    <Link href="/#matches" className="btn-dark btn-md mx-auto">
                       Voir les matchs <ChevronRight className="w-4 h-4" />
                     </Link>
                   </div>

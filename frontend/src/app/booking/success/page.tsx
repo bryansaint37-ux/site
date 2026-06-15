@@ -60,7 +60,7 @@ function BookingSuccessPageContent() {
           <Link href="/dashboard" className="btn-primary flex items-center gap-2 justify-center">
             My Bookings <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href="/matches" className="btn-secondary">Browse More Matches</Link>
+          <Link href="/#matches" className="btn-secondary">Browse More Matches</Link>
         </div>
       </div>
     </div>

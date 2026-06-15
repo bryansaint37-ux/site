@@ -1,4 +1,6 @@
 'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, SlidersHorizontal, CalendarDays, MapPin, Ticket } from 'lucide-react';
@@ -52,6 +54,8 @@ const up: Variants = {
 };
 
 export default function MatchesPage() {
+  const router = useRouter();
+  useEffect(() => { router.replace('/'); }, [router]);
   const [filters, setFilters] = useState({ search:'', stage:'', date_from:'', date_to:'', team:'' });
   const [page, setPage] = useState(1);
 

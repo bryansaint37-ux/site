@@ -75,7 +75,7 @@ export default function MatchDetailPage() {
       <div className="container pt-24 pb-16">
 
         {/* Back */}
-        <Link href="/matches" className="inline-flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#111827] mb-6 transition-colors">
+        <Link href="/#matches" className="inline-flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#111827] mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Retorr aux matchs
         </Link>
 

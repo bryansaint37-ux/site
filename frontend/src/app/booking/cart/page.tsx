@@ -39,7 +39,7 @@ export default function CartPage() {
         </div>
         <h2 className="text-xl font-bold text-[#111827] mb-2">Yorr cart is empty</h2>
         <p className="text-[#6B7280] text-sm mb-8">Browse les matches available et add des billets for commencer.</p>
-        <Link href="/matches" className="btn btn-dark btn-lg">Explore matches <ArrowRight className="w-4 h-4" /></Link>
+        <Link href="/#matches" className="btn btn-dark btn-lg">Explore matches <ArrowRight className="w-4 h-4" /></Link>
       </div>
     </div>
   );
@@ -50,7 +50,7 @@ export default function CartPage() {
       <div className="container pt-24 pb-12">
         <div className="flex items-center justify-between mb-7">
           <div>
-            <Link href="/matches" className="inline-flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#111827] mb-2 transition-colors">
+            <Link href="/#matches" className="inline-flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#111827] mb-2 transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Continue shopping
             </Link>
             <h1 className="text-xl font-bold text-[#111827]">My cart

@@ -12,12 +12,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import api from '@/lib/api';
 
 const LINKS = [
-  { href: '/',        label: 'Home' },
-  { href: '/matches', label: 'Matches'  },
-  { href: '/matches', label: 'Tickets' },
-  { href: '/stades',  label: 'Stadiums'  },
-  { href: '/faq',     label: 'FAQ'     },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'Home' },
+  { href: '#matches', label: 'Matches' },
+  { href: '#matches', label: 'Tickets' },
+  { href: '#stadiums', label: 'Stadiums' },
+  { href: '#contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
