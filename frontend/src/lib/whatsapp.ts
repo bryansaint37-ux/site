@@ -15,7 +15,7 @@ export function buildWhatsAppLink({
   price?: string;
   items?: Array<{ match: string; date: string; stadium: string; category: string; price: string; quantity?: number }>;
 }) {
-  const lines = ['Bonjour,', '', 'Je souhaite réserver les billets suivants :', ''];
+  const lines = ['Hello,', '', 'I would like to book a ticket for:', ''];
 
   if (items && items.length > 0) {
     items.forEach((item, index) => {
@@ -28,11 +28,11 @@ export function buildWhatsAppLink({
       lines.push('');
     });
   } else {
-    lines.push(`Match : ${match || 'À confirmer'}`);
-    lines.push(`Date : ${date || 'À confirmer'}`);
-    lines.push(`Stade : ${stadium || 'À confirmer'}`);
-    lines.push(`Catégorie : ${category}`);
-    lines.push(`Prix : ${price}`);
+    lines.push(`Match : ${match || 'To confirm'}`);
+    lines.push(`Date : ${date || 'To confirm'}`);
+    lines.push(`Stadium : ${stadium || 'To confirm'}`);
+    lines.push(`Category : ${category}`);
+    lines.push(`Price : ${price}`);
     lines.push('');
   }
 

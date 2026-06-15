@@ -553,10 +553,10 @@ function CtaSection() {
             <div className="flex flex-wrap gap-3 justify-center">
               <button
                 type="button"
-                onClick={() => openWhatsAppBooking({ match: 'FIFA World Cup 2026', date: 'À confirmer', stadium: 'Stade à confirmer', category: 'Billet officiel', price: 'From 80 $' })}
+                onClick={() => openWhatsAppBooking({ match: 'FIFA World Cup 2026', date: 'to be confirm', stadium: 'Stade à confirmer', category: 'official ticket', price: 'From 80 $' })}
                 className="btn-green btn-lg cursor-pointer"
               >
-                Book now <ArrowRight className="w-4 h-4" />
+                Book now0 <ArrowRight className="w-4 h-4" />
               </button>
               <Link href="/auth/register">
                 <motion.span whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
